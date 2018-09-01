@@ -134,4 +134,4 @@ The app enable continuous integration with circleci
 3. The docker container is created with docker-compose
 4. The container is uploaded to [docker hub](https://hub.docker.com/r/ristrettoninjateam)
 5. A machine is created en [digital ocean](https://www.digitalocean.com/)
-6. The container is downloaded to machine in digital ocean
+6. The container is downloaded to machine in digital ocean.
