@@ -1,0 +1,42 @@
+// shared css for the login and signup page
+@import "../login/login.component.scss";
+
+.image-upload {
+	display: inline-block;
+	vertical-align: sub;
+}
+.image-upload > input {
+	width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.image-upload > label {
+	-webkit-border-radius: 50px;
+	border-radius: 50px;
+	color: rgba(255,255,255,0.8);
+	background: $topnav-background-color;
+	border: 2px solid rgba(255,255,255,0.8);
+	font-size: 18px;
+	line-height: 40px;
+	padding: 0 25px;
+	cursor: pointer;
+}
+
+.image-upload > label > img{
+	width: 1em;
+	height: 1em;
+	vertical-align: middle;
+	fill: currentColor;
+	margin-top: -0.25em;
+	margin-right: 0.25em;
+}
+
+.image-upload > label:hover,.image-upload > label:focus,.image-upload > label:active,.image-upload > label:visited{
+	color: rgba(255,255,255,1);
+	border: 2px solid rgba(255,255,255,1);
+	outline: none;
+}

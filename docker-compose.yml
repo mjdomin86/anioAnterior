@@ -1,0 +1,53 @@
+version: '2'
+services:
+    seed:
+        build: ./data
+            #context: .
+            #dockerfile: Dockerfile
+    db:
+        image: mongo
+        volumes_from:
+            - seed
+        command: ["/seed/seed.sh"]
+    back:
+        build: ./app/back
+        links:
+            - db
+        ports:
+            - "5000:5000"
+        #image: ristrettoninjateam/app-back
+    front:
+        build: ./app/front
+        volumes:
+           - ng2:/src/dist
+        #image: ristrettoninjateam/app-front
+    web:
+        image: nginx
+        volumes:
+            - ng2:/usr/share/nginx/html
+            - .circleci/root/etc/nginx/:/etc/nginx/
+        #command:
+        #    - bash -c "ufw enable && ufw app list &&  ufw allow 'Nginx Full' && systemctl status nginx
+       #     - bash -c "ls /usr/share/nginx/html"
+       #     - bash -c "cat /etc/nginx/conf.d/default.conf"
+        ports:
+            - "80:80"
+        links:
+            - db
+        depends_on:
+            - back
+        #image: ristrettoninjateam/app
+        environment:
+            # The value of these variables in the container will be taken
+            # from the value for the same variable in the shell in which 
+            # Compose is run.
+            - GOOGLE_SECRET
+            - FACEBOOK_SECRET
+            - TOKEN_SECRET
+            - HOST
+            - BACK_PORT=80
+            - FRONT_PORT=80
+            - NODE_ENV=Production
+            - MONGO_URI=mongodb://localhost:27017/test
+volumes:
+    ng2: {}

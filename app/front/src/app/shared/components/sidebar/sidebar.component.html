@@ -1,0 +1,67 @@
+<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
+    <ul class="list-group">
+        <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'Dashboard' | translate }}
+        </a>
+
+        <div class="nested-menu">
+            <a class="list-group-item" (click)="addExpandClass('accounts')">
+                <span><i class="fa fa-plus"></i>&nbsp; {{ 'Accounts' | translate }}</span>
+            </a>
+            <li class="nested" [class.expand]="showMenu === 'accounts'">
+                <ul class="submenu">
+                    <li>
+                        <a routerLink="/accounts/providers" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-fw fa-handshake-o"></i>&nbsp;{{ 'Providers' | translate }}
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/accounts/balances" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-fw fa-balance-scale"></i>&nbsp;{{ 'Balance' | translate }}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </div>
+
+
+      <div class="nested-menu">
+            <a class="list-group-item" (click)="addExpandClass('general')">
+                <span><i class="fa fa-plus"></i>&nbsp; {{ 'General' | translate }}</span>
+            </a>
+            <li class="nested" [class.expand]="showMenu === 'general'">
+                <ul class="submenu">
+                    <li>
+                        <a [routerLink]="['/general/charts']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;{{ 'Charts' | translate }}
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/general/api-docs']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-fw fa-file-text-o"></i>&nbsp;{{ 'API' | translate }}
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/general/users" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-fw fa-users"></i>&nbsp;{{ 'Users' | translate }}
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/general/settings" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-fw fa-cog"></i>&nbsp;{{ 'Settings' | translate }}
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/general/contact" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-fw fa-comments"></i>&nbsp;{{ 'Contact Us' | translate }}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </div>
+        <a routerLink="/feedback" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-commenting"></i>&nbsp;{{ 'Feedback' | translate }}
+        </a>
+       
+    </ul>
+</nav>

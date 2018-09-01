@@ -1,0 +1,55 @@
+<div class="pos-f-t fixed-top header">
+    <nav class="navbar navbar-inverse bg-inverse navbar-toggleable-sm">
+        <button class="navbar-toggler navbar-toggler-left" (click)="toggleSidebar()">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-header hidden-md-up" style="text-align: center;">
+            <a class="navbar-brand" href="Javascript:void(0)" [routerLink]="['/dashboard']">App</a>
+        </div>
+        <div class="navbar-header hidden-sm-down">
+            <a class="navbar-brand" href="Javascript:void(0)" [routerLink]="['/dashboard']">App</a>
+        </div>
+        <div class="collapse navbar-collapse navbar-toggleable-sm">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown" ngbDropdown>
+                    <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+                        <i class="fa fa-language"></i> {{ 'Language' | translate }} <b class="caret"></b>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('en')">{{ 'English' | translate }}</a>
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('es')">{{ 'Spanish' | translate }}</a>
+                        </div>
+                </li>
+                <li class="nav-item dropdown" ngbDropdown>
+                    <a href="javascript:void(0)" class="nav-link dropdown-toggle dropdown-toggle" ngbDropdownToggle>
+                        <img alt="Profile" class="topnav-img" [src]="user.picture" 
+                        style="width: 25px; height: 25px; border-radius: 150px;
+                        -webkit-border-radius: 150px;
+                        -moz-border-radius: 150px;">
+                        <!--i class="fa fa-user"></i--> {{ user.displayName}} <b class="caret"></b>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" [routerLink]="['/profile']"><i class="fa fa-fw fa-user"></i> {{ 'Profile' | translate }}</a>
+                        <a class="dropdown-item" [routerLink]="['/login']" (click)="onLoggedout()"><i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }} </a>
+                    </div>
+                    
+                </li>
+            </ul>
+        </div>
+        <div class="navbar-toggler navbar-toggler-right dropdown" ngbDropdown style="border: none;">
+            <a href="javascript:void(0)" class="navbar-toggler navbar-toggler-right dropdown-toggle dropdown-toggle" ngbDropdownToggle style="border: none; padding: 0; margin-top: -2px; cursor: pointer;">
+                <img alt="Profile" class="topnav-img" [src]="user.picture" 
+                style="width: 35px; height: 35px; border-radius: 150px;
+                -webkit-border-radius: 150px;
+                -moz-border-radius: 150px;">
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" style="top: 44px; right: -5px; padding: 0; box-shadow: 0 6px 12px">
+                <a class="dropdown-item" [routerLink]="['/profile']" style="padding: 15px; margin-top: -2px; border: none; cursor: pointer;"><i class="fa fa-fw fa-user"></i> {{ 'Profile' | translate }}</a>
+                <a class="dropdown-item" [routerLink]="['/login']" (click)="onLoggedout()" style="padding: 15px; border: none; margin-top: -2px; cursor: pointer;"><i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('en')" style="padding: 15px; margin-top: -2px; border: none; cursor: pointer;"><i class="fa fa-language"></i> {{ 'English' | translate }}</a>
+                <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('es')" style="padding: 15px; margin-top: -2px; border: none; cursor: pointer;"><i class="fa fa-language"></i> {{ 'Spanish' | translate }}</a>
+            </div>
+        </div>
+    </nav>
+</div>

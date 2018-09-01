@@ -1,0 +1,4 @@
+docker build -t ristrettoninjateam/alpine-nginx-node8.5:1.0.0 .
+docker tag ristrettoninjateam/alpine-nginx-node8.5:1.0.0 ristrettoninjateam/alpine-nginx-node8.5:latest
+docker push ristrettoninjateam/alpine-nginx-node8.5:1.0.0
+docker push ristrettoninjateam/alpine-nginx-node8.5:latest

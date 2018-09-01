@@ -1,0 +1,56 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Users'" [icon]="'fa-thumb-tack'"></app-page-header>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-sm-6 col-lg-4" *ngFor="let item of users; let i = index">
+                    <div class="card mb-3">
+                        <div class="card-header card-default">
+                            <img alt="Profile" class="topnav-img" [src]="item.picture" 
+                            style="width: 43px; height: 43px; border-radius: 150px;
+                            -webkit-border-radius: 150px;
+                            -moz-border-radius: 150px;">
+                            {{item.displayName}} 
+                            <span *ngIf="item._id !== userLogged._id && userLogged.roles.indexOf('admin') >= 0" class="fa-stack fa-lg right" (click)="delete(item._id)">
+                                <i class="fa fa-square-o fa-stack-2x"></i>
+                                <i class="fa fa-trash fa-stack-1x"></i>
+                            </span>
+                        </div>
+                        <div class="card-block">
+                            <div class="row">
+                                <span>Email: {{item.email}}</span>
+                            </div>
+                            <div class="row">
+                                <span>Face: {{item.face ? 'Yes' : 'No'}}</span>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div ngbRadioGroup class="btn-group btn-group-sm" data-toggle="buttons" name="rolebox">
+                                    <label class="btn btn-primary" [ngClass]="{ 'active': item.roles.indexOf('user') >= 0, 'disabled': userLogged.roles.indexOf('admin') == -1 }">
+                                        <input type="checkbox" value="user" [name]="item._id"
+                                        [checked]="item.roles.indexOf('user') >= 0"
+                                        (change)="onRoleSelectItem($event.target.checked, i, 'user')"
+                                        [disabled]="userLogged.roles.indexOf('admin') == -1"
+                                        > User
+                                    </label>
+                                    <label class="btn btn-primary" [ngClass]="{ 'active': item.roles.indexOf('admin') >= 0, 'disabled': userLogged.roles.indexOf('admin') == -1 }">
+                                        <input type="checkbox" value="admin" [name]="item._id" 
+                                        [checked]="item.roles.indexOf('admin') >= 0"
+                                        (change)="onRoleSelectItem($event.target.checked, i, 'admin')"
+                                        [disabled]="userLogged.roles.indexOf('admin') == -1"
+                                        > Admin
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+               
+        </div>
+    </div>
+    
+</div>
+
+    

@@ -1,0 +1,45 @@
+1. Obtener nombre de PC de aws
+
+2. Agregar el host en
+    2.1 Consola de google developer
+        URL: https://console.developers.google.com/apis
+        Editar el cliente de ouath "Ristretto App" y agregar en entrada y salida la url de aws, con puerto.
+        Ejeemplo: http://ec2-18-231-81-16.sa-east-1.compute.amazonaws.com
+                  https://ec2-18-231-81-16.sa-east-1.compute.amazonaws.com
+        IMPORTANTE!!!! En las de redirección, va con / FINAl !!!!!!!!!!!
+                  http://ec2-18-231-81-16.sa-east-1.compute.amazonaws.com/
+                  https://ec2-18-231-81-16.sa-east-1.compute.amazonaws.com/
+
+    2.2 Consola de facebook
+        URL: https://developers.facebook.com/apps
+
+    2.3 Consola de recaptcha
+        URL: https://www.google.com/recaptcha/admin#list
+
+    2.4 Archivo app/front/src/environments/environment.prod.ts
+
+    2.5 Actualizar el host en las variables de scripts/*.sh 
+
+    2.6 actualizar url en azure
+
+3. Agregar el usuario admin en mongodb
+        {
+        "picture":"/assets/images/flat-avatar.png",
+        "displayName":"admin",
+        "email":"admin@admin.com",
+        "password":"$2a$10$doX.GZphql/iONQrKIVVvucCjeI0vRZxos5.A7GJFbn2dHgBzaJPe",
+        "face":null,
+        "roles":["user","admin"]
+        }
+
+        El email es "admin@admin.com" y el password es "admin".
+        Hay que agregar ese user al mongo de prod y después loguiarse con el para poder eliminar/modificar otros.
+
+4. Actualizar la versión en el pie de pagina app/front/src/app/shared/components/footer/footer.component.html
+
+5. Instalar maquina en aws con scripts/install-aws.sh
+    Esto instala nginx en aws, jenkins y hace despliegue inicial de la app
+
+6. Entrar a la consola de jenkins (instalado en paso anterior)y configurar job (segun scripts/deploy-jenkins.sh)
+   Esto deja el build autom{atico al hacer push a la rama Master.
+

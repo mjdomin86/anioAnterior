@@ -1,0 +1,4 @@
+docker build -t ristrettoninjateam/alpine-base3.6:1.0.0 .
+docker tag ristrettoninjateam/alpine-base3.6:1.0.0 ristrettoninjateam/alpine-base3.6:latest
+docker push ristrettoninjateam/alpine-base3.6:1.0.0
+docker push ristrettoninjateam/alpine-base3.6:latest

@@ -1,0 +1,66 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Todo'" [icon]="'fa-thumb-tack'"></app-page-header>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <button class="btn btn-sm btn-primary right" data-toggle="modal" data-target="#addTodo" (click)="open(content)">
+                        <i class="fa fa-plus-square-o fa-lg"></i> {{ 'Add' | translate }}
+                    </button>
+                </div>
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-sm-4" *ngFor="let item of todos">
+                            <div class="card mb-3">
+                                <div class="card-header card-default">
+                                    {{item.title}} 
+                                    <span class="fa-stack fa-lg right" (click)="delete(item._id)">
+                                        <i class="fa fa-square-o fa-stack-2x"></i>
+                                        <i class="fa fa-trash fa-stack-1x"></i>
+                                    </span>
+                                </div>
+                                <div class="card-block">
+                                    {{item.description}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- The modal -->
+    <ng-template #content let-c="close" let-d="dismiss">
+        <form role="form" (ngSubmit)="f.form.valid && create()" #f="ngForm" novalidate>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ 'Add' | translate }} {{ 'Todo' | translate }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-content">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
+                        <input type="text" class="form-control input-lg" placeholder="Title" 
+                            name="title" [(ngModel)]="todo.title" #title="ngModel" required />
+                        <div *ngIf="f.submitted && !title.valid" class="help-block">Required</div>
+                    </div>
+
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
+                        <textarea rows="3" class="form-control" placeholder="Description" 
+                            name="description" [(ngModel)]="todo.description" #description="ngModel" required ></textarea>
+                        <div *ngIf="f.submitted && !description.valid" class="help-block">Required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="d()">{{ 'Close' | translate }}</button>
+                <button type="button" class="btn btn-primary" [disabled]="!f.valid" (click)="c()">{{ 'Save' | translate }}</button>
+            </div>
+        </form>
+                
+    </ng-template>
+</div>
+
+    

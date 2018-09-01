@@ -1,0 +1,152 @@
+
+$topnav-background-color: #496b88;// #222;
+:host {
+    display: block;
+}
+.content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    background: $topnav-background-color;
+    text-align: center;
+    color: #fff;
+    padding: 10em;
+    .col-lg-8{
+        padding :0;
+    }
+    .rounded-btn{
+        -webkit-border-radius: 50px;
+                border-radius: 50px;
+        color: rgba(255,255,255,0.8);
+        background: $topnav-background-color;
+        border: 2px solid rgba(255,255,255,0.8);
+        font-size: 18px;
+        line-height: 40px;
+        padding: 0 25px;
+    }
+    .rounded-btn:hover,.rounded-btn:focus,.rounded-btn:active,.rounded-btn:visited{
+        color: rgba(255,255,255,1);
+        border: 2px solid rgba(255,255,255,1);
+        outline: none;
+    }
+
+}
+
+* {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+li,
+dt,
+dd,
+p,
+th,
+td,
+caption {
+  font-size: 2em;
+}
+
+ul,
+ol,
+dl {
+  margin-bottom: 1.5em;
+}
+
+p {
+  margin-bottom: 1.25em;
+}
+
+li *,
+li p,
+li li,
+dt *,
+dd *,
+p * {
+  font-size: 1em;
+}
+
+fieldset,
+img {
+  border: none;
+}
+
+button {
+  overflow: visible;
+  cursor: pointer;
+}
+
+legend {
+  display: none;
+}
+
+pre {
+  font: 1.1em "Courier New", monospace;
+  white-space: pre-wrap;
+}
+
+em {
+  padding: 1px 3px;
+  background: #78a3ae;
+  font-style: normal;
+}
+
+a {
+  color: #205f73;
+  text-decoration: underline;
+}
+
+a:hover,
+a:focus,
+a:active {
+  color: #fff;
+}
+
+html {
+  min-height: 100%;
+  margin-bottom: 1px;
+  height: 100%;
+}
+
+.welcome-page {
+  margin: 0;
+  padding: 0;
+  background: #14121d;
+  color: #fff;
+  font: 62.5%/1.4 Georgia, serif;
+}
+
+ div.outer {
+  overflow: hidden;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#content div.outer {
+  width: 100%;
+  background: url(../../assets/images/404.jpg) 50% 0 no-repeat;
+  background-size: 100%;  
+}
+
+#error {
+  max-width: 500px;  
+  min-height: 135px;
+  margin: 40px auto 0;
+  padding: 105px 0 110px 285px;
+  background: url(../../assets/images/shinobi.png) no-repeat;
+  color: #fff;
+}
+
+#error h1 {
+  margin: 0 0 1px -2px;
+  font-size: 3.8em;
+  font: bold 3.4em Bitter, Georgia, Geneva, serif;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+}

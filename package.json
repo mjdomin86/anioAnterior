@@ -1,0 +1,17 @@
+{
+    "name": "app",
+    "version": "1.0.0",
+    "author": "Ristretto Ninja Team",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/ristrettoNinjaTeam/ristrettoapp.git"
+    },
+    "description": "Ristretto Ninja Team - Hackathon Argentina",
+    "scripts": {
+        "front:serve-dev": "cd app/front && ng serve &",
+        "back:serve": "cd app/back && node app.js &",
+        "serve-dev": "export NODE_ENV=DEVELOPMENT && npm run back:serve && npm run front:serve-dev",
+        "kill-nodes": "sudo kill $(sudo lsof -t -i:4200) && sudo kill $(sudo lsof -t -i:5000)"
+    }
+}

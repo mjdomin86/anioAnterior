@@ -1,0 +1,39 @@
+version: '2'
+services:
+    seed:
+        build: ./data
+            #context: .
+            #dockerfile: Dockerfile
+    db:
+        image: mongo
+        volumes_from:
+            - seed
+        command: ["/seed/seed.sh"]
+    back:
+    #    build: ./back
+    #    links:
+    #        - db
+    #    ports:
+    #        - "5000:5000"
+    front:
+        image: ristrettoninjateam/ristrettoapp
+        volumes:
+            - ng2:/src/dist
+        environment:
+            - constraint:node==master
+    web:
+        image: nginx
+        volumes:
+            - ng2:/usr/share/nginx/html
+        ports:
+            - "80:80"
+        links:
+            - db
+        depends_on:
+            - front
+        environment:
+            - GOOGLE_SECRET
+            - FACEBOOK_SECRET
+            - TOKEN_SECRET
+volumes:
+    ng2: {}

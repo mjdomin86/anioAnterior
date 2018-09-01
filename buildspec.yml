@@ -1,0 +1,49 @@
+version: 0.2
+# Config needed: ubuntu + Runtine Node V 7.0  + 7 Gb memorial
+env:
+  variables:
+    NODE_ENV: Production 
+    JUST_BUILD_SPEC_VERSION: 1.2
+phases:
+  install:
+    commands:
+      - curr_working_dir=`pwd`
+      - echo Entered the install phase...
+      - echo Installing mongo for Test
+      - echo Checking Node and npm versions...
+      - node --version
+      - npm --version
+      - echo Installing dependencies...
+      - npm i -g mocha chain chai-http
+      - cd app/back/ && npm i && npm install --production
+      - cd $curr_working_dir
+      - cd app/front && npm i
+      - cd $curr_working_dir
+  pre_build:
+    commands:
+      - echo Entered the pre_build phase...
+      - echo Installing source NPM dependencies...
+      - npm install -g @angular/cli typescript forever
+      - npm config set depth 0
+      - npm config set logleve warn
+      - npm cache clean --force
+  build:
+    commands:
+      - curr_working_dir=`pwd`
+      - echo Entered the build phase...
+      - echo Build started on `date`
+      - echo Running tests...
+      - cd app/back && mocha --exit
+      - cd $curr_working_dir
+      - echo Building...
+      - cd app/front/ 
+      - ng build --prod --aot && npm run precache && cp -r nodeserver/* dist
+      - cd $curr_working_dir
+  post_build:
+    commands:
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - app/front/**/*
+    - app/back/**/*
+  discard-paths: no

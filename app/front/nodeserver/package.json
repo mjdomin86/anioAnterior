@@ -1,0 +1,9 @@
+{
+  "name": "ristretto-app-build-serve",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "express": "4.13.4"
+  }
+}

@@ -1,0 +1,6 @@
+#exclude these folders to avoid that npm builds in dockerfile, aren't replaced
+dist
+e2e
+node_modules
+tmp
+README.md

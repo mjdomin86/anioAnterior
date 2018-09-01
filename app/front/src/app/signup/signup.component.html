@@ -1,0 +1,93 @@
+<div class="login-page" [@routerTransition]>
+    <div class="row justify-content-md-center">
+        <div class="col-lg-5">
+            <div class="hidden-sm-down">
+                <img src="assets/images/logo.png" width="100px" class="user-avatar" />
+                <h1>Ristretto Ninja Team</h1>
+            </div>
+            <div class="hidden-md-up">
+                <img src="assets/images/logo.png" width="50px" class="user-avatar" />
+                <h3>App</h3>
+            </div>
+
+            <form role="form" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
+                <div class="form-content">
+                    <div class="form-group" [ngClass]="{ 'has-danger': f.submitted && !displayName.valid }">
+                        <input type="text" class="form-control input-underline input-lg" 
+                            [ngClass]="{ 'input-underline-danger': f.submitted && !displayName.valid}"    
+                            placeholder="Full Name" 
+                            name="displayName" [(ngModel)]="model.displayName" #displayName="ngModel" required />
+                        <div class="form-control-feedback text-left" *ngIf="f.submitted && !displayName.valid" >Required</div>
+                    </div>
+
+                    <div class="form-group" [ngClass]="{ 'has-danger': f.submitted && !email.valid }">
+                        <input type="email" class="form-control input-underline input-lg" placeholder="Email" 
+                            [ngClass]="{ 'input-underline-danger': f.submitted && !email.valid}" 
+                            name="email" [(ngModel)]="model.email" #email="ngModel" required email=true/>
+                        <div class="form-control-feedback text-left" *ngIf="f.submitted && !email.valid" >
+                            <div *ngIf="email.errors.required">Required</div>
+                            <div *ngIf="!email.errors.required && email.errors.email">Email invalido</div>
+                        </div>
+                    </div>
+					
+					<!--
+					                    <div class="input-group" [ngClass]="{ 'has-danger': f.submitted && !fileInputValid()}">
+                        <image-upload
+                            #fileInput
+                            [max]="1"
+                            [preview]="true"
+                            [maxFileSize]="5000000"    
+                            [extensions]="['jpg','png','gif','gif', 'jpeg']"
+                            [buttonCaption]="'Select Image'"
+                            [dropBoxMessage]="'Drop your image here!'"
+                            [fileTooLargeMessage]="'Image too large!'"
+                            [clearButtonCaption]="'Clear'"
+                            [class]="'customClass'"      
+                            (removed)="onRemoved($event)"
+                            (uploadFinished)="onUploadFinished($event)"
+                            (uploadStateChanged)="onUploadStateChanged($event)"
+                            [ngClass]="{ 'input-underline-danger': f.submitted && !fileInputValid()}"
+                            [(ngModel)]="model.file"
+                            #fileInput="ngModel"
+                            name="fileInput" required>
+                        </image-upload>
+                        <div class="form-control-feedback text-left" *ngIf="f.submitted && !fileInputValid()">Picture required</div>
+                    </div>
+					
+					-->
+
+                    <div class="form-group" [ngClass]="{ 'has-danger': f.submitted && !password.valid }">
+                        <input type="password" class="form-control input-underline input-lg" placeholder="Password"
+                        [ngClass]="{ 'input-underline-danger': f.submitted && !password.valid}" 
+                            name="password" [(ngModel)]="model.password" #password="ngModel" required />
+                        <div class="form-control-feedback text-left" *ngIf="f.submitted && !password.valid">Required</div>
+                    </div>
+                    
+                    <div class="form-group">
+                       <!-- <input #fileInput type="file" 
+                        class="form-control input-underline input-lg" placeholder="Take your face picture..."/> -->
+
+
+                       <div class="image-upload">
+                            <input #fileInput type="file" id="pepe"
+                            name="fileInput" (change)="readImage()"/>
+                            <label for="pepe">
+                                <img src="assets/images/camera.png" alt="camera">
+                                <span>Face Picture</span>
+                            </label>
+                        </div>
+                        <img [src]="faceImagePath ? faceImagePath.result : null" class="preview">
+
+
+                    </div>
+                    <div class="form-group">
+                        <button [disabled]="loading" class="btn rounded-btn">Sign Up</button>
+                        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                        &nbsp;
+                        <a class="btn rounded-btn" [routerLink]="['/login']"> Log in </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

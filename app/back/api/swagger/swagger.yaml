@@ -1,0 +1,640 @@
+swagger: "2.0"
+info:
+  version: "0.01"
+  title: App
+  description: API Documentation
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+#host: Taked automatically from site
+basePath: /
+
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  #- https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /api/private/providers:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: provider.controller
+    get:
+        description: Returns the list of all Providers of user
+        operationId: providers
+        tags: [Providers]
+        security:
+          - Bearer: []
+        consumes:
+          - application/json
+        produces:
+          - application/json
+        responses:
+          "200":
+            description: Success
+            schema:
+              # a pointer to a definition
+              $ref: "#/definitions/providersResponse"
+            # responses may fall through to errors
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/basicResponse"
+    post: 
+        description: "Acces token provider."
+        operationId: addProvider
+        tags: [Providers]
+        security:
+          - Bearer: []
+        consumes:
+          - application/json
+        produces:
+          - application/json
+        parameters: 
+          - name: provider
+            in: body
+            description: acces token provider
+            required: true
+            schema:
+              $ref: '#/definitions/providerRequest'
+        responses:
+          "200":
+            description: Provider token access
+            schema:
+             # a pointer to a definition
+              $ref: "#/definitions/basicResponse"
+          # responses may fall through to errors
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/basicResponse"
+  /api/private/balances:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: provider.controller
+    get:
+        description: Returns the list of all balances
+        operationId: balances
+        tags: [Providers]
+        security:
+          - Bearer: []
+        consumes:
+          - application/json
+        produces:
+          - application/json
+        responses:
+          "200":
+            description: Success
+            schema:
+              # a pointer to a definition
+              $ref: "#/definitions/balancesResponse"
+            # responses may fall through to errors
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/basicResponse"
+  /api/public/auth/login:
+    x-swagger-router-controller: user.controller
+    post:
+        description: Authenticate the user
+        operationId: login
+        tags: [Auth]
+        consumes:
+          - application/json
+        produces:
+          - application/json
+        parameters: 
+          - name: login
+            in: body
+            description: Fields to login the user
+            required: true
+            schema:
+              $ref: '#/definitions/loginRequest'
+        responses:
+          "200":
+            description: Success
+            schema:
+              $ref: "#/definitions/tokenResponse"
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/basicResponse"
+  /api/public/auth/login/face:
+    x-swagger-router-controller: user.controller
+    post:
+        description: Authenticate the user with face recognition
+        operationId: facelogin
+        tags: [Auth, Face, Recognition]
+        consumes:
+          - application/json
+        produces:
+          - application/json
+        parameters: 
+          - name: login
+            in: body
+            description: Fields to login the user
+            required: true
+            schema:
+              $ref: '#/definitions/faceloginRequest'
+        responses:
+          "200":
+            description: Success
+            schema:
+              $ref: "#/definitions/tokenResponse"
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/basicResponse"
+  /api/public/face/person:
+    x-swagger-router-controller: face.controller
+    post:
+        description: Add face Recognition to Azure and Mongo
+        operationId: addAzurePersonAndMongoFace
+        tags: [Face, Recognition]
+        consumes:
+          - multipart/form-data
+        produces:
+          - application/json
+        parameters: 
+          - in: formData
+            name: file
+            type: file
+            description: The picture to upload.
+          - in: formData
+            name: email
+            type: string
+            description: User email.
+        responses:
+          "200":
+            description: Success
+            schema:
+              $ref: "#/definitions/faceIdResponse"
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/basicResponse"
+  /api/public/face/detect:
+    x-swagger-router-controller: face.controller
+    post:
+        description: Get Azure faceId
+        operationId: getAzureFaceId
+        tags: [Face, Recognition]
+        consumes:
+          - multipart/form-data
+        produces:
+          - application/json
+        parameters: 
+          - in: formData
+            name: file
+            type: file
+            description: The picture to upload.
+        responses:
+          "200":
+            description: Success
+            schema:
+              $ref: "#/definitions/faceIdResponse"
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/basicResponse"
+  /api/private/face/feedback:
+    x-swagger-router-controller: feedback.controller
+    post:
+        security:
+          - Bearer: []
+        description: Feedback with face recognition
+        operationId: feedback
+        tags: [Face, Recognition]
+        consumes:
+          - multipart/form-data
+        produces:
+          - application/json
+        parameters: 
+          - in: formData
+            name: file
+            type: file
+            description: The picture to upload.
+          - in: formData
+            name: comment
+            type: string
+            description: User comment feedback.
+        responses:
+          "200":
+            description: Success
+            schema:
+              $ref: "#/definitions/basicResponse"
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/basicResponse"
+  /api/public/auth/signup:
+    x-swagger-router-controller: user.controller
+    post:
+        description: Register the user
+        operationId: signup
+        tags: [Auth]
+        consumes:
+          - application/json
+        produces:
+          - application/json
+        parameters: 
+          - name: signup
+            in: body
+            description: Fields to create the user
+            required: true
+            schema:
+              $ref: '#/definitions/userRequest'
+        responses:
+          "200":
+            description: Success
+            schema:
+              $ref: "#/definitions/tokenResponse"
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/basicResponse"
+  /api/public/auth/facebook:
+    x-swagger-router-controller: user.controller
+    post:
+        description: Register/Login the user
+        operationId: facebook
+        tags: [Auth]
+        consumes:
+          - application/json
+        produces:
+          - application/json
+        parameters: 
+          - name: facebook
+            in: body
+            description: Fields to create/login the user with Facebook
+            required: true
+            schema:
+              $ref: '#/definitions/facebookRequest'
+        responses:
+          "200":
+            description: Success
+            schema:
+              $ref: "#/definitions/tokenResponse"
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/basicResponse"
+  /api/public/auth/google:
+    x-swagger-router-controller: user.controller
+    post:
+        description: Register/Login the user
+        operationId: google
+        tags: [Auth]
+        consumes:
+          - application/json
+        produces:
+          - application/json
+        parameters: 
+          - name: google
+            in: body
+            description: Fields to create/login the user with Google
+            required: true
+            schema:
+              $ref: '#/definitions/googleRequest'
+        responses:
+          "200":
+            description: Success
+            schema:
+              $ref: "#/definitions/tokenResponse"
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/basicResponse"
+  /api/private/profile:
+    x-swagger-router-controller: user.controller
+    get:
+        security:
+          - Bearer: []
+        description: Get user profile
+        tags: [Profile]
+        consumes:
+          - application/json
+        produces:
+          - application/json
+        responses:
+          "200":
+            description: Success
+            schema:
+              $ref: "#/definitions/profileResponse"
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/errorResponse"
+    put:
+        security:
+          - Bearer: []
+        description: Update user profile
+        tags: [Profile]
+        consumes:
+          - application/json
+        produces:
+          - application/json
+        parameters: 
+          - name: userprofile
+            in: body
+            description: Fields to update the user
+            required: true
+            schema:
+              $ref: '#/definitions/userRequest'
+        responses:
+          "200":
+            description: Success
+            schema:
+              $ref: "#/definitions/tokenResponse"
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/basicResponse"
+  /api/private/users:
+    x-swagger-router-controller: user.controller
+    get:
+      security:
+        - Bearer: []
+      description: Get all users
+      operationId: getAll
+      tags: [Users]
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/usersResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+    put:
+      security:
+        - Bearer: []
+      description: Update user roles
+      operationId: putUserRoles
+      tags: [Users]
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters: 
+      - name: user
+        in: body
+        description: Fields to update the user roles
+        required: true
+        schema:
+          $ref: '#/definitions/userRequest'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/basicResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+  /api/private/users/{id}:
+    x-swagger-router-controller: user.controller
+    delete:
+      security:
+        - Bearer: []
+      description: Delete a user
+      operationId: delete
+      tags: [Users]
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters: 
+        - name: id
+          in: path
+          description: ID of the User to delete
+          required: true
+          type: string 
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/basicResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+  /api/swagger:
+     x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  providerRequest:
+    type: object
+    properties:
+      code:
+        type: string
+        example: code client
+      provider:
+        type: string
+        example: provider type
+  providersResponse:
+    required:
+      - list
+    properties:
+      list:
+        type: array
+        items:
+          $ref: '#/definitions/providerResponse'
+  providerResponse:
+    type: object
+    properties:
+      _id:
+        type: string
+        example: Todo Id
+      title:
+        type: string
+        example: Title of To Do
+      description:
+        type: string
+        example: Desciption of To Do
+      user: 
+        type: string
+        example: User Id
+      created:
+        type: string
+        example: Date of To Do Created
+  balancesResponse:
+    required:
+      - list
+    properties:
+      list:
+        type: array
+        items:
+          $ref: '#/definitions/balanceResponse'
+  balanceResponse:
+    type: object
+    properties:
+      providerType: 
+        type: string
+      balance:
+        type: number
+      currency:
+        type: string
+  tokenResponse:
+    type: object
+    properties:
+      token:
+        type: string
+  loginRequest:
+    type: object
+    properties:
+      email:
+        type: string
+        example: User email
+      password:
+        type: string
+        example: User password
+  faceloginRequest:
+    type: object
+    properties:
+      password:
+        type: string
+        example: User password
+      faceId:
+        type: string
+        example: Azure Face Id
+  userRequest:
+    type: object
+    properties:
+      _id:
+        type: string
+        example: User id
+      email:
+        type: string
+        example: User email
+      displayName:
+        type: string
+        example: User fullname
+      password:
+        type: string
+        example: User password
+      picture:
+        type: string
+        example: User picture
+      provider:
+        type: string
+        example: User provider
+      provider_id:
+        type: string
+        example: User provider id
+      face:
+        type: string
+        example: Azure Face Id
+      roles: 
+        type: array
+        example: User roles
+        items: 
+          type: string
+  facebookRequest:
+    type: object
+    properties:
+      code:
+        type: string
+        example: Code
+      clientId:
+        type: string
+        example: ClienId
+      GOOGLE_SECRET:
+        type: string
+        example: Secret
+      redirectUri:
+        type: string
+        example: RedirectUri
+  googleRequest:
+    type: object
+    properties:
+      code:
+        type: string
+        example: Code
+      clientId:
+        type: string
+        example: ClienId
+      FACEBOOK_SECRET:
+        type: string
+        example: Secret
+      redirectUri:
+        type: string
+        example: RedirectUri
+  profileResponse:
+    type: object
+    required:
+      - _id
+      - email
+      - displayName
+    properties:
+      _id:
+        type: string
+        example: Profile id
+      email:
+        type: string
+        example: User email
+      displayName:
+        type: string
+        example: User fullname
+      picture: 
+        type: string
+        example: Social picture
+      provider:
+        type: string
+        example: Social provider
+      provider_id:
+        type: string
+        example: Social provider id
+  errorResponse:
+    type: object
+    properties:
+      message:
+        type: string
+  basicResponse:
+    type: object
+    properties:
+      message:
+        type: string
+  faceIdResponse:
+    type: object
+    properties:
+      faceId:
+        type: string
+  usersResponse:
+    required:
+      - list
+    properties:
+      list:
+        type: array
+        items:
+          $ref: '#/definitions/userResponse'
+  userResponse:
+    type: object
+    required:
+      - _id
+      - email
+      - displayName
+      - roles
+    properties:
+      _id:
+        type: string
+        example: User id
+      email:
+        type: string
+        example: User email
+      displayName:
+        type: string
+        example: User fullname
+      roles: 
+        type: array
+        example: User roles
+        items: 
+          type: string

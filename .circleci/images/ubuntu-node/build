@@ -1,0 +1,6 @@
+sudo docker login
+sudo docker build -t ristrettoninjateam/ubuntu-node:1.0.0 .
+sudo docker tag ristrettoninjateam/ubuntu-node:1.0.0 ristrettoninjateam/ubuntu-node:latest
+sudo docker push ristrettoninjateam/ubuntu-node:1.0.0
+sudo docker push ristrettoninjateam/ubuntu-node:latest
+ 
